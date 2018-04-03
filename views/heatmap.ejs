@@ -1,0 +1,48 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Calendar Heatmap</title>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/calendar-heatmap.css">
+</head>
+
+<body>
+    <div class="container"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.min.js" charset="utf-8"></script>
+    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="/javascripts/calendar-heatmap.js"></script>
+
+    <script type="text/javascript">
+        var now = moment().endOf('day').toDate();
+        var yearAgo = moment().startOf('day').subtract(1, 'year').toDate();
+
+        var chartData = d3.time.days(yearAgo, now).map(function (dateElement) {
+            return {
+                date: dateElement,
+                count: (dateElement.getDay() !== 0 && dateElement.getDay() !== 6) ? Math.floor(Math.random() * 100) : Math.floor(Math.random() * 10)
+            };
+        });
+
+        var heatmap = calendarHeatmap()
+            .data(chartData)
+            .selector('.container')
+            .tooltipEnabled(true)
+            .tooltipUnit(
+            [
+                { min: 0, unit: '~views~' },
+                { min: 1, max: 'Infinity', unit: 'views' }
+            ])
+            .colorRange(['#E3FFBD', '#6AB900'])
+            .onClick(function (data) {
+                alert('data', data);
+            });
+
+        heatmap();  // render the chart
+
+    </script>
+    <br> Mention in tabs, Sample Data,
+    <br> // chart data example var chartData = [{ date: valid Javascript date object, count: Number }];
+    <h3>Source : <a href="https://github.com/DKirwan/calendar-heatmap">Calender Heatmap</a> </h3>
+</body>
+
+</html>
