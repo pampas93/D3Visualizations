@@ -4,7 +4,7 @@ function calendarHeatmap() {
   var width = 750;
   var height = 110;
   var legendWidth = 150;
-  var selector = 'body';
+  var selector = '#tab_default_1';
   var SQUARE_LENGTH = 11;
   var SQUARE_PADDING = 2;
   var MONTH_LABEL_PADDING = 6;
