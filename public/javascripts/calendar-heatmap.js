@@ -4,7 +4,7 @@ function calendarHeatmap() {
   var width = 750;
   var height = 110;
   var legendWidth = 150;
-  var selector = '#tab_default_1';
+  var selector = '#tab_default_1';    //Changed this to #tab_default_1, previously it was body
   var SQUARE_LENGTH = 11;
   var SQUARE_PADDING = 2;
   var MONTH_LABEL_PADDING = 6;
@@ -42,7 +42,7 @@ function calendarHeatmap() {
   };
 
   chart.selector = function (value) {
-    if (!arguments.length) { return selector; }
+    if (!arguments.length) { return '#tab_default_1'; }     //Changed return value from selector to '#tab_default_1'
     selector = value;
     return chart;
   };
