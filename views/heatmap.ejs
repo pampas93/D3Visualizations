@@ -1,93 +1,58 @@
-<html>
+<% var name = "Calender Heatmap" %>
+<% var link = "https://github.com/DKirwan/calendar-heatmap" %>
+<% var cssLink = "/stylesheets/calendar-heatmap.css" %>
 
-<head>
-    <meta charset="utf-8">
-    <title>Calendar Heatmap</title>
-    <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="/stylesheets/calendar-heatmap.css">
-    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
-
-<body>
-        <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
+<%- include('templates/headlinks', {css: cssLink}) -%>
+<div class="tabbable-panel">
+    <h2>
+        <%= name %>
+    </h2>
+    <div class="tabbable-line">
+        <%- include('templates/tabs') -%>
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab_default_1">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.min.js" charset="utf-8"></script>
+                <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+                <script src="/javascripts/calendar-heatmap.js"></script>
             
-                        <div class="tabbable-panel">
-                            <div class="tabbable-line">
-                                <ul class="nav nav-tabs ">
-                                    <li class="active">
-                                        <a href="#tab_default_1" data-toggle="tab">Visualization </a>
-                                    </li>
-                                    <li>
-                                        <a href="#tab_default_2" data-toggle="tab">Data schema </a>
-                                    </li>
-                                    <li>
-                                        <a href="#tab_default_3" data-toggle="tab">Sources </a>
-                                    </li>
-                                </ul>
-                                <div class="tab-content">
-                                    <div class="tab-pane active" id="tab_default_1">
-                                            <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.min.js" charset="utf-8"></script>
-                                            <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-                                            <script src="/javascripts/calendar-heatmap.js"></script>
-                                        
-                                            <script type="text/javascript">
-                                                var now = moment().endOf('day').toDate();
-                                                var yearAgo = moment().startOf('day').subtract(1, 'year').toDate();
-                                        
-                                                var chartData = d3.time.days(yearAgo, now).map(function (dateElement) {
-                                                    return {
-                                                        date: dateElement,
-                                                        count: (dateElement.getDay() !== 0 && dateElement.getDay() !== 6) ? Math.floor(Math.random() * 100) : Math.floor(Math.random() * 10)
-                                                    };
-                                                });
-                                                
-                                                var heatmap = calendarHeatmap()
-                                                    .data(chartData)
-                                                    .selector('.container')
-                                                    .tooltipEnabled(true)
-                                                    .tooltipUnit(
-                                                    [
-                                                        { min: 0, unit: '~views~' },
-                                                        { min: 1, max: 'Infinity', unit: 'views' }
-                                                    ])
-                                                    .colorRange(['#E3FFBD', '#6AB900'])
-                                                    .onClick(function (data) {
-                                                        alert('data', data);
-                                                    });
-                                        
-                                                heatmap();  // render the chart
-                                        
-                                            </script>
-                                       
-                                    </div>
-                                    <div class="tab-pane" id="tab_default_2">
-                                        <p>
-                                                Type of data being used (Schema)
-                                        </p>
-                                       
-                                    </div>
-                                    <div class="tab-pane" id="tab_default_3">
-                                        <p>
-                                            <a class="btn btn-info" href="https://github.com/DKirwan/calendar-heatmap">
-                                                GIT source
-                                            </a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <script type="text/javascript">
+                    var now = moment().endOf('day').toDate();
+                    var yearAgo = moment().startOf('day').subtract(1, 'year').toDate();
             
-                        
-                    </div>
-                </div>
+                    var chartData = d3.time.days(yearAgo, now).map(function (dateElement) {
+                        return {
+                            date: dateElement,
+                            count: (dateElement.getDay() !== 0 && dateElement.getDay() !== 6) ? Math.floor(Math.random() * 100) : Math.floor(Math.random() * 10)
+                        };
+                    });
+                    
+                    var heatmap = calendarHeatmap()
+                        .data(chartData)
+                        .selector('.container')
+                        .tooltipEnabled(true)
+                        .tooltipUnit(
+                        [
+                            { min: 0, unit: '~views~' },
+                            { min: 1, max: 'Infinity', unit: 'views' }
+                        ])
+                        .colorRange(['#E3FFBD', '#6AB900'])
+                        .onClick(function (data) {
+                            alert('data', data);
+                        });
+            
+                    heatmap();  // render the chart
+            
+                </script>
             </div>
-    
-</body>
+            <div class="tab-pane" id="tab_default_2">
+            </div>
+            <div class="tab-pane" id="tab_default_3">
+                <p>
+                    <a class="btn btn-info" href= <%= link %> >Source</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
 
-</html>
+<%- include('templates/taillinks') -%>
